@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-module Rspec
-  module Html
+module RSpec
+  module HTML
     VERSION = '0.1.0'
   end
 end

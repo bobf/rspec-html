@@ -6,7 +6,7 @@ require 'rspec/html/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'rspec-html'
-  spec.version       = Rspec::Html::VERSION
+  spec.version       = RSpec::HTML::VERSION
   spec.authors       = ['Bob Farrell']
   spec.email         = ['git@bob.frl']
 
@@ -28,9 +28,13 @@ Gem::Specification.new do |spec|
   spec.executables   = []
   spec.require_paths = ['lib']
 
+  spec.add_dependency 'nokogiri', '~> 1.10'
   spec.add_dependency 'rspec', '~> 3.0'
 
+  spec.add_development_dependency 'betterp', '~> 0.1.3'
   spec.add_development_dependency 'bundler', '~> 2.0'
+  spec.add_development_dependency 'byebug', '~> 11.0'
+  spec.add_development_dependency 'i18n', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec-its', '~> 1.3'
   spec.add_development_dependency 'rubocop', '~> 0.76.0'

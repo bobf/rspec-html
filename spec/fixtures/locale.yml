@@ -1,0 +1,7 @@
+spec:
+  test:
+    basic:
+      body: 'some example body content'
+      title: 'some example title content'
+      data: 'some example data content'
+      nonexistent: 'some example non-existent content'
