@@ -7,4 +7,5 @@ RSpec.describe RSpecHTML::Document do
 
   it { is_expected.to be_a described_class }
   its(:body) { is_expected.to be_a RSpecHTML::Body }
+  its(:head) { is_expected.to be_a RSpecHTML::Head }
 end

@@ -19,4 +19,14 @@ RSpec.shared_examples 'searchable' do
       it { is_expected.to be false }
     end
   end
+
+  describe '#to_s' do
+    subject(:to_s) { entity.to_s }
+    it { is_expected.to eql I18n.t("test.basic.#{entity.name}") }
+  end
+
+  describe '#inspect' do
+    subject(:inspect) { entity.inspect }
+    it { is_expected.to eql %("#{I18n.t("test.basic.#{entity.name}")}") }
+  end
 end

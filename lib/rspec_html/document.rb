@@ -11,6 +11,10 @@ module RSpecHTML
       Body.new(parsed_html)
     end
 
+    def head
+      Head.new(parsed_html)
+    end
+
     private
 
     def parsed_html

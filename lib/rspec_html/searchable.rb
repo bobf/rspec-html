@@ -6,5 +6,13 @@ module RSpecHTML
     def include?(val)
       @entity.text.include?(val)
     end
+
+    def to_s
+      @entity.text.strip
+    end
+
+    def inspect
+      %("#{self}")
+    end
   end
 end
