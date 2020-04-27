@@ -7,6 +7,16 @@ module RSpecHTML
       @html = html
     end
 
+    # rubocop:disable Naming/PredicateName
+    def has_xpath?(*args)
+      !parsed_html.xpath(*args).empty?
+    end
+
+    def has_css?(*args)
+      !parsed_html.css(*args).empty?
+    end
+    # rubocop:enable Naming/PredicateName
+
     def body
       Body.new(parsed_html)
     end
