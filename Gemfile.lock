@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rspec-html (0.1.1)
+    rspec-html (0.1.2)
       nokogiri (~> 1.10)
       rspec (~> 3.0)
 

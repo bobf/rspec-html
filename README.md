@@ -5,7 +5,7 @@ _RSpec::HTML_ provides a simple object interface to HTML responses from [_RSpec 
 ## Installation
 
 ```ruby
-gem 'rspec-html', '~> 0.1.1'
+gem 'rspec-html', '~> 0.1.2'
 ```
 
 Bundle
@@ -33,6 +33,8 @@ RSpec.describe 'something', type: :request do
   it 'does something' do
     get '/'
     expect(document.body).to include 'something'
+    expect(document.body).to have_css 'html body div.myclass'
+    expect(document.body).to have_xpath '//html/body/div[@class="myclass"]'
   end
 end
 ```
