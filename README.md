@@ -5,7 +5,7 @@ _RSpec::HTML_ provides a simple object interface to HTML responses from [_RSpec 
 ## Installation
 
 ```ruby
-gem 'rspec-html', '~> 0.1.2'
+gem 'rspec-html', '~> 0.1.3'
 ```
 
 Bundle
