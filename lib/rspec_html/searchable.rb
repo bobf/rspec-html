@@ -7,6 +7,24 @@ module RSpecHTML
       @entity.text.include?(val)
     end
 
+    def css(*args)
+      @entity.css(*args)
+    end
+
+    def xpath(*args)
+      @entity.xpath(*args)
+    end
+
+    # rubocop:disable Naming/PredicateName
+    def has_css?(*args)
+      !css(*args).empty?
+    end
+
+    def has_xpath?(*args)
+      !xpath(*args).empty?
+    end
+    # rubocop:enable Naming/PredicateName
+
     def to_s
       @entity.text.strip
     end

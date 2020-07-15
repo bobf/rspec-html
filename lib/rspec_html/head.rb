@@ -4,6 +4,7 @@ module RSpecHTML
   # HTML/BODY abstraction
   class Head
     include Nameable
+    include Searchable
 
     def initialize(parsed_html)
       @parsed_html = parsed_html
