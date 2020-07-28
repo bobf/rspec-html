@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe RSpecHTML::Element do
-  subject(:element) { described_class.new(html, :document) }
+  subject(:element) { document }
+
+  let(:document) { described_class.new(html, :document) }
 
   let(:html) { Nokogiri::HTML.parse(fixture(:html, :basic).read) }
 
@@ -19,9 +21,54 @@ RSpec.describe RSpecHTML::Element do
     it { is_expected.to eql 'example-class' }
   end
 
-  describe 'attribute matching' do
+  describe '["string"]' do
     subject { element.body.span(class: 'another-class')['data-value'] }
     it { is_expected.to eql 'a data value' }
+  end
+
+  describe '[:symbol]' do
+    subject { element.body.span(class: 'another-class')[:align] }
+    it { is_expected.to eql 'center' }
+  end
+
+  describe '#[index]' do
+    subject { element.body.span[2][:class] }
+    it { is_expected.to eql 'another-class' }
+
+    it 'raises ArgumentError when attempting to match 1' do
+      expect { element.body.span[0] }.to raise_error ArgumentError
+    end
+  end
+
+  describe '#[Range]' do
+    subject { element.body.span[1...2] }
+    its(:size) { is_expected.to eql 2 }
+  end
+
+  describe '#size' do
+    subject { element.body.span.size }
+    it { is_expected.to eql 2 }
+  end
+
+  describe '#size' do
+    subject { element.body.span.length }
+    it { is_expected.to eql 2 }
+  end
+
+  it { is_expected.to exist }
+
+  describe '#present?' do
+    subject { element.present? }
+
+    context 'element found' do
+      let(:element) { document.div }
+      it { is_expected.to be true }
+    end
+
+    context 'element not found' do
+      let(:element) { document.section }
+      it { is_expected.to be false }
+    end
   end
 
   describe '#has_css?' do

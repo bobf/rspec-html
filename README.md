@@ -26,18 +26,61 @@ Require the gem in your `spec_helper.rb`:
 require 'rspec/html'
 ```
 
-In request specs, access the HTML document through the provided object interface:
+In request specs, access the HTML document through the provided `document` object.
 
+### Object Interface
+
+To navigating the _DOM_ by a sequence of tag names use chained method calls on the `document` object:
+
+#### Tag Traversal
 ```ruby
-RSpec.describe 'something', type: :request do
-  it 'does something' do
-    get '/'
-    expect(document.body).to include 'something'
-    expect(document.body).to have_css 'html body div.myclass'
-    expect(document.body).to have_xpath '//html/body/div[@class="myclass"]'
-    expect(document.body.div(class: 'myclass')['data-something']).to eql 'some-data'
-  end
-end
+expect(document.body.div.span).to include 'some text'
+```
+
+#### Attribute Matching
+To select an element matching certain attributes pass a hash to any of the chained methods:
+```ruby
+expect(document.body.div(id: 'my-div').span(class: 'my-class')).to eql 'some text'
+```
+
+#### Attribute Retrieval
+To select an attribute from an element use the hash-style interface:
+```ruby
+expect(document.body.div.span[:class]).to eql 'my-class'
+expect(document.body.div.span['data-content']).to eql 'my content'
+```
+
+#### Indexing a Matching Set
+To select an index from a set of matched elements use the array-style interface (the first matching element is `1`, not `0`):
+```ruby
+expect(document.body.div[1].span[1][:class]).to eql 'my-class'
+```
+
+#### Element Existence
+To test if a matching element was found use the `exist` matcher:
+```ruby
+expect(document.body.div[1]).to exist
+expect(document.body.div[4]).to_not exist
+```
+
+#### Length of matched attributes
+To test the length of matched elements use the `#size` or `#length` method:
+```ruby
+expect(document.body.div.size).to eql 3
+expect(document.body.div.length).to eql 3
+```
+
+#### XPath / CSS Selectors
+If you need something more specific you can always use the _Nokogiri_ `#xpath` and `#css` methods on any element:
+```ruby
+expect(document.body.xpath('//span[@class="my-class"]')).to include 'some text'
+expect(document.body.css('span.my-class')).to include 'some text'
+```
+
+To simply check that an _XPath_ or _CSS_ selector exists use `have_xpath` and `have_css`:
+```ruby
+expect(document.body).to have_css 'html body div.myclass'
+expect(document.body).to have_xpath '//html/body/div[@class="myclass"]'
 ```
 
 ## Contributing

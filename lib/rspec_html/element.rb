@@ -6,9 +6,10 @@ module RSpecHTML
     include Searchable
     include Nameable
 
-    def initialize(element, name)
+    def initialize(element, name, siblings: [])
       @name = name
       @element = element
+      @siblings = siblings
     end
   end
 end
