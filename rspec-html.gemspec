@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'byebug', '~> 11.0'
   spec.add_development_dependency 'devpack', '~> 0.1.2'
   spec.add_development_dependency 'i18n', '~> 1.7'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec-its', '~> 1.3'
   spec.add_development_dependency 'rubocop', '~> 0.88.0'
   spec.add_development_dependency 'rubocop-rspec', '~> 1.36'
