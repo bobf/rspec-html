@@ -26,11 +26,11 @@ Require the gem in your `spec_helper.rb`:
 require 'rspec/html'
 ```
 
-In request specs, access the HTML document through the provided `document` object.
-
 ### Object Interface
 
-To navigating the _DOM_ by a sequence of tag names use chained method calls on the `document` object:
+The top-level object `document` is available in all tests.
+
+To navigate the _DOM_ by a sequence of tag names use chained method calls on the `document` object:
 
 #### Tag Traversal
 ```ruby
