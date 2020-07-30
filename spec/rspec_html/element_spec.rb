@@ -16,6 +16,26 @@ RSpec.describe RSpecHTML::Element do
     its(:to_s) { is_expected.to eql 'some example body content' }
   end
 
+  describe 'traversal by attribute' do
+    subject { element.body.span(align: 'center') }
+    its([:class]) { is_expected.to eql 'another-class' }
+
+    describe 'class matching' do
+      subject { element.body.div(class: 'class1') }
+      its(['data-value']) { is_expected.to eql 'multi-class' }
+
+      context 'with other query options' do
+        subject { element.body.div(class: 'class1', align: 'left') }
+        its(['data-value']) { is_expected.to eql 'left-aligned multi-class' }
+      end
+
+      context 'multiple classes' do
+        subject { element.body.div(class: %w[class1 class2]) }
+        its(['data-value']) { is_expected.to eql 'multi-class' }
+      end
+    end
+  end
+
   describe 'attribute retrieval' do
     subject { element.body.span[:class] }
     it { is_expected.to eql 'example-class' }

@@ -76,16 +76,32 @@ module RSpecHTML
     end
 
     def where(tag, query, all: false)
-      matched = @element&.xpath("//#{tag}[#{where_conditions(query)}]")
+      matched = if query[:class]
+                  where_class(tag, query[:class]) & where_xpath(tag, query.merge(class: nil))
+                else
+                  where_xpath(tag, query)
+                end
       return matched&.first unless all
 
       matched
     end
 
+    def where_xpath(tag, query)
+      conditions = "[#{where_conditions(query)}]" unless query.compact.empty?
+      @element&.xpath("//#{tag}#{conditions}")
+    end
+
     def where_conditions(query)
-      query.map do |key, value|
+      query.compact.map do |key, value|
+        next if value.nil?
+
         %(@#{key}="#{value}")
       end.join ' and '
+    end
+
+    def where_class(tag, class_or_classes)
+      selector = class_or_classes.is_a?(Array) ? class_or_classes.join('.') : class_or_classes
+      @element&.css("#{tag}.#{selector}")
     end
 
     def find(tag, all: false)

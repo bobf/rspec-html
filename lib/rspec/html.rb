@@ -9,7 +9,11 @@ module RSpec
   # Module extension for RSpec::SharedContext
   module HTML
     def document
-      RSpecHTML::Element.new(Nokogiri::HTML.parse(response.body), :document)
+      @document || RSpecHTML::Element.new(Nokogiri::HTML.parse(response.body), :document)
+    end
+
+    def parse_html(content)
+      @document = RSpecHTML::Element.new(Nokogiri::HTML.parse(content), :document)
     end
   end
 end
