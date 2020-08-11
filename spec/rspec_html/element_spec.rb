@@ -13,7 +13,7 @@ RSpec.describe RSpecHTML::Element do
 
   describe 'recursive tag traversal' do
     subject { element.body.span }
-    its(:to_s) { is_expected.to eql 'some example body content' }
+    its(:text) { is_expected.to eql 'some example body content' }
   end
 
   describe 'traversal by attribute' do

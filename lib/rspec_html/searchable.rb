@@ -4,7 +4,7 @@ module RSpecHTML
   # Mixin module providing methods for searching text content of HTML entities
   module Searchable
     def include?(val)
-      @element.text.include?(val)
+      text.include?(val)
     end
 
     def css(*args)
@@ -30,19 +30,15 @@ module RSpecHTML
     end
     # rubocop:enable Naming/PredicateName
 
-    def to_s
-      @element&.text&.strip
-    end
-
-    def inspect
-      %("#{@element}")
-    end
-
     def [](val)
       return index(val) if val.is_a?(Integer)
       return range(val) if val.is_a?(Range)
 
       @element&.attr(val.to_s)
+    end
+
+    def text
+      @element&.text || ''
     end
 
     def size
@@ -110,8 +106,10 @@ module RSpecHTML
       @element&.css(tag.to_s)
     end
 
+    # rubocop:disable Lint/MissingSuper
     def respond_to_missing?(method_name, *_)
       Tags.include?(method_name)
     end
+    # rubocop:enable Lint/MissingSuper
   end
 end
