@@ -16,3 +16,5 @@ module RSpecHTML
     Pathname.new(__dir__).parent
   end
 end
+
+RSpec.configure { |config| config.include RSpecHTML::Matchers }

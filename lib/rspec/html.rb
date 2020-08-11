@@ -9,11 +9,13 @@ module RSpec
   # Module extension for RSpec::SharedContext
   module HTML
     def document
-      if response.nil?
+      return @document if @document
+
+      if !defined?(response) || response.nil?
         raise RSpecHTML::NoResponseError, 'No `response` object found. Make a request first.'
       end
 
-      @document || RSpecHTML::Element.new(Nokogiri::HTML.parse(response.body), :document)
+      RSpecHTML::Element.new(Nokogiri::HTML.parse(response.body), :document)
     end
 
     def parse_html(content)
