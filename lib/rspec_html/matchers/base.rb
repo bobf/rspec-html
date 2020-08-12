@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 module RSpecHTML
   module Matchers
+    # Mix-in class to provide a uniform interface and message templating for all matchers.
     module Base
       def self.included(base)
         base.class_eval do
@@ -14,6 +17,8 @@ module RSpecHTML
           end
         end
       end
+
+      attr_reader :actual
 
       def initialize(expected, options = {})
         @expected = expected

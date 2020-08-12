@@ -11,6 +11,33 @@ RSpec.describe RSpecHTML::Element do
   its(:body) { is_expected.to be_a RSpecHTML::Element }
   its(:head) { is_expected.to be_a RSpecHTML::Element }
 
+  describe '.reconstituted' do
+    subject(:reconstituted) { described_class.reconstituted(tag, options) }
+    context 'simple tag' do
+      let(:tag) { :span }
+      let(:options) { {} }
+      it { is_expected.to eql '<span />' }
+    end
+
+    context 'tag with options' do
+      let(:tag) { :span }
+      let(:options) { { name: 'my-name', align: 'left' } }
+      it { is_expected.to eql '<span name="my-name" align="left" />' }
+    end
+
+    context 'tag with classes' do
+      let(:tag) { :span }
+      let(:options) { { name: 'my-name', class: %w[my-class-1 my-class-2] } }
+      it { is_expected.to eql '<span name="my-name" class="my-class-1 my-class-2" />' }
+    end
+
+    context 'tag with text' do
+      let(:tag) { :span }
+      let(:options) { { text: 'some text' } }
+      it { is_expected.to eql '<span>some text</span>' }
+    end
+  end
+
   describe 'recursive tag traversal' do
     subject { element.body.span }
     its(:text) { is_expected.to eql 'some example body content' }
@@ -33,6 +60,19 @@ RSpec.describe RSpecHTML::Element do
         subject { element.body.div(class: %w[class1 class2]) }
         its(['data-value']) { is_expected.to eql 'multi-class' }
       end
+    end
+  end
+
+  describe 'traversal by text' do
+    subject { element.body.span(text: text) }
+    context 'expected text exists' do
+      let(:text) { 'some example body content' }
+      it { is_expected.to be_present }
+    end
+
+    context 'expected does not text exist' do
+      let(:text) { 'some example missing content' }
+      it { is_expected.to_not be_present }
     end
   end
 

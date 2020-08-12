@@ -90,8 +90,9 @@ module RSpecHTML
     def where_conditions(query)
       query.compact.map do |key, value|
         next if value.nil?
+        next %(@#{key}="#{value}") unless key == :text
 
-        %(@#{key}="#{value}")
+        %[contains(text(),"#{value}")]
       end.join ' and '
     end
 
