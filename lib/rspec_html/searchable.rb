@@ -116,7 +116,8 @@ module RSpecHTML
     end
 
     def where_class(tag, class_or_classes)
-      selector = class_or_classes.is_a?(Array) ? class_or_classes.join('.') : class_or_classes
+      classes = class_or_classes.is_a?(Array) ? class_or_classes : class_or_classes.to_s.split
+      selector = classes.map(&:to_s).join('.')
       @element&.css("#{tag}.#{selector}")
     end
 

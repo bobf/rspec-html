@@ -55,11 +55,13 @@ expect(document.body.div(id: 'my-div').span(align: 'left')).to contain_text 'som
 ```
 
 #### Class Matching
-CSS classes are treated as a special case: to select an element matching a specific class (or array of classes) pass the `class` parameter:
+_CSS_ classes are treated as a special case: to select an element matching a set of classes pass the `class` parameter:
 ```ruby
 expect(document.body.div(id: 'my-div').span(class: 'my-class')).to contain_text 'some text'
-expect(document.body.div(id: 'my-div').span(class: ['my-class', 'my-other-class'])).to contain_text 'some text'
+expect(document.body.div(id: 'my-div').span(class: 'my-class my-other-class')).to contain_text 'some text'
 ```
+
+Classes can be provided in any order, i.e. `'my-class my-other-class'` is equivalent to `'my-other-class my-class'`.
 
 #### Text Matching
 To select an element that includes a given text string (i.e. excluding mark-up) use the `text` option:
