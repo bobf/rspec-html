@@ -131,7 +131,7 @@ expect(document.div(class: 'my-class')).to contain_tag :span
 ```
 
 With options:
-```
+```ruby
 expect(document.form(class: 'my-form')).to contain_tag :input, name: 'email', class: 'email-input'
 ```
 

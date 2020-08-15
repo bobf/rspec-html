@@ -5,6 +5,7 @@ require 'pathname'
 
 require 'rspec_html/searchable'
 require 'rspec_html/element'
+require 'rspec_html/reconstituted_element'
 require 'rspec_html/tags'
 require 'rspec_html/matchers'
 

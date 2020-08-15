@@ -10,18 +10,22 @@ module RSpecHTML
     extend RSpec::Matchers::DSL
     extend RSpec::Matchers::DSL::Macros
 
+    # rubocop:disable Metrics/MethodLength
     def self.define_matcher(name, class_)
       matcher name do |expected, options|
-        rspec_html_matcher = class_.new(expected, options)
+        rspec_html_matcher = class_.new(expected, options || {})
         match do |actual|
-          @actual = rspec_html_matcher.actual
-          rspec_html_matcher.match(actual)
+          rspec_html_matcher
+            .save_actual(actual)
+            .match(actual)
+            .tap { @actual = rspec_html_matcher.rspec_actual }
         end
         description { rspec_html_matcher.description }
-        failure_message { |actual| rspec_html_matcher.failure_message(actual) }
+        failure_message { rspec_html_matcher.failure_message }
         diffable if class_.diffable?
       end
     end
+    # rubocop:enable Metrics/MethodLength
 
     define_matcher(:contain_text, ContainText)
     define_matcher(:contain_tag, ContainTag)

@@ -18,24 +18,33 @@ module RSpecHTML
         end
       end
 
-      attr_reader :actual
+      attr_reader :rspec_actual
 
-      def initialize(expected, options = {})
+      def initialize(expected, options)
         @expected = expected
         @options = options
       end
 
       def description
-        template(:description, @expected)
+        template(:description, @options, @expected)
       end
 
-      def failure_message(actual)
-        template(:failure, @expected, actual)
+      def failure_message
+        template(:failure, @options, @expected, @actual)
+      end
+
+      def save_actual(actual)
+        @actual = actual
+        self
+      end
+
+      def reconstituted(element, options)
+        RSpecHTML::Element.reconstituted(element, options)
       end
 
       private
 
-      def template(type, expected, actual = nil)
+      def template(type, options, expected, actual = nil)
         ERB.new(template_path(type).read).result(binding)
       end
 

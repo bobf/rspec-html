@@ -38,7 +38,7 @@ module RSpecHTML
     end
 
     def text
-      @element&.text || ''
+      @element&.text&.gsub('\s+', ' ')&.strip || ''
     end
 
     def size
@@ -51,10 +51,29 @@ module RSpecHTML
     private
 
     def method_missing(tag, *args)
+      options = args.first
       return super unless Tags.include?(tag)
-      return self.class.new(find(tag), tag, siblings: find(tag, all: true)) if args.empty?
+      return new_from_find(tag, options) if options.nil?
 
-      self.class.new(where(tag, args.first), tag, siblings: where(tag, args.first, all: true))
+      new_from_where(tag, options)
+    end
+
+    def new_from_find(tag, options)
+      self.class.new(
+        find(tag),
+        tag,
+        options: options,
+        siblings: find(tag, all: true)
+      )
+    end
+
+    def new_from_where(tag, options)
+      self.class.new(
+        where(tag, options),
+        tag,
+        options: options,
+        siblings: where(tag, options, all: true)
+      )
     end
 
     def index(val)

@@ -1,5 +1,5 @@
 <% if actual.element.nil? %>
-Expected <%= actual.name %> to contain <%= RSpecHTML::Element.reconstituted(expected, @options) %> but the element did not exist.
+Expected <%= reconstituted(actual, @options) %> to contain <%= reconstituted(expected, @options) %> but the element did not exist.
 <% else %>
-Expected <<%= actual.name %>> to contain <%= RSpecHTML::Element.reconstituted(expected, @options) %> but it did not.
+Expected <%= reconstituted(actual, @options) %> to contain <%= reconstituted(expected, @options) %> but it did not.
 <% end %>

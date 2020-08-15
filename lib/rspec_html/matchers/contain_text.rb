@@ -9,7 +9,7 @@ module RSpecHTML
       diffable
 
       def match(actual)
-        @actual = actual&.text&.strip
+        @rspec_actual = actual&.text&.strip
         (actual&.text || '').include?(@expected.to_s)
       end
     end
