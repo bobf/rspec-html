@@ -9,6 +9,7 @@ RSpec.describe RSpecHTML::Matchers do
   describe 'contain_text' do
     it { is_expected.to contain_text 'example body content' }
     it { is_expected.to_not contain_text 'non-existent body content' }
+    its(:p) { is_expected.to contain_text 'Paragraph with spacing' }
   end
 
   describe 'contain_tag' do

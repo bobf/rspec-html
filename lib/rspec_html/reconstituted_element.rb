@@ -12,7 +12,7 @@ module RSpecHTML
       name = @tag.to_s.downcase
       return '#document' if name == 'document'
       return name if name == 'document'
-      return "<#{name}#{formatted_attributes} />" unless @options.key?(:text)
+      return "<#{name}#{formatted_attributes} />" unless @options&.key?(:text)
 
       "<#{name}#{formatted_attributes}>#{@options[:text]}</#{name}>"
     end
@@ -20,6 +20,8 @@ module RSpecHTML
     private
 
     def mapped_attributes
+      return [] if @options.nil?
+
       @options.reject { |key| key.to_sym == :text }.map do |key, value|
         next %(#{key}="#{value}") unless key.to_sym == :class && value.is_a?(Array)
 

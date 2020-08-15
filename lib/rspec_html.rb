@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
 require 'nokogiri'
-require 'pathname'
 
-require 'rspec_html/searchable'
-require 'rspec_html/element'
-require 'rspec_html/reconstituted_element'
+require 'pathname'
+require 'forwardable'
+
 require 'rspec_html/tags'
+require 'rspec_html/element'
+require 'rspec_html/search'
+require 'rspec_html/reconstituted_element'
 require 'rspec_html/matchers'
 
 # Support module for rspec/html

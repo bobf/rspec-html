@@ -7,6 +7,10 @@ module RSpecHTML
       tags.include?(val.to_s.upcase)
     end
 
+    def self.each(&block)
+      tags.each { |tag| block.call(tag) }
+    end
+
     # rubocop:disable Metrics/MethodLength
     def self.tags
       %w[

@@ -1,8 +1,13 @@
 # frozen_string_literal: true
 
 module RSpecHTML
-  # Mixin module providing methods for searching text content of HTML entities
-  module Searchable
+  # Provides element/attribute/text searching for HTML entities
+  class Search
+    def initialize(element, siblings)
+      @element = element
+      @siblings = siblings
+    end
+
     def include?(val)
       text.include?(val)
     end
@@ -38,7 +43,7 @@ module RSpecHTML
     end
 
     def text
-      @element&.text&.gsub('\s+', ' ')&.strip || ''
+      @element&.text&.gsub(/\s+/, ' ')&.strip || ''
     end
 
     def size
@@ -48,18 +53,8 @@ module RSpecHTML
     end
     alias length size
 
-    private
-
-    def method_missing(tag, *args)
-      options = args.first
-      return super unless Tags.include?(tag)
-      return new_from_find(tag, options) if options.nil?
-
-      new_from_where(tag, options)
-    end
-
     def new_from_find(tag, options)
-      self.class.new(
+      Element.new(
         find(tag),
         tag,
         options: options,
@@ -68,7 +63,7 @@ module RSpecHTML
     end
 
     def new_from_where(tag, options)
-      self.class.new(
+      Element.new(
         where(tag, options),
         tag,
         options: options,
@@ -76,9 +71,11 @@ module RSpecHTML
       )
     end
 
+    private
+
     def index(val)
       zero_index_error if val.zero?
-      self.class.new(@siblings[val - 1], name)
+      self.class.new(@siblings[val - 1], @element.name)
     end
 
     def range(val)
@@ -126,11 +123,5 @@ module RSpecHTML
 
       @element&.css(tag.to_s)
     end
-
-    # rubocop:disable Lint/MissingSuper
-    def respond_to_missing?(method_name, *_)
-      Tags.include?(method_name)
-    end
-    # rubocop:enable Lint/MissingSuper
   end
 end
