@@ -54,7 +54,7 @@ module RSpecHTML
 
       def filename
         _, _, name = self.class.name.rpartition('::')
-        (name[0] + name[1..].gsub(/(.)([A-Z])/, '\1_\2')).downcase
+        (name[0] + name[1..-1].gsub(/(.)([A-Z])/, '\1_\2')).downcase
       end
     end
   end

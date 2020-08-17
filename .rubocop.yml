@@ -9,6 +9,10 @@ Gemspec/RequiredRubyVersion:
 Layout/LineLength:
   Max: 100
 
+# Compatibility with older (< 2.6) Rubies.
+Style/SlicingWithRange:
+  Enabled: false
+
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 Layout/SpaceAroundMethodCallOperator:
@@ -52,8 +56,6 @@ Style/RedundantFileExtensionInRequire:
 Style/RedundantRegexpCharacterClass:
   Enabled: true
 Style/RedundantRegexpEscape:
-  Enabled: true
-Style/SlicingWithRange:
   Enabled: true
 Lint/BinaryOperatorWithIdenticalOperands:
   Enabled: true
