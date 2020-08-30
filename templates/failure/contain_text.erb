@@ -1,5 +1,5 @@
 <% unless actual.exist? %>
 Expected <%= actual.reconstituted %> to contain <%= expected.inspect %> but the element did not exist.
 <% else %>
-Expected text in <%= actual.reconstituted %> <%= (actual.text&.strip || '').inspect %> to contain <%= expected.inspect %> but it did not.
+Expected text in <%= actual.reconstituted %> <%= (actual.truncated_text).inspect %> to contain <%= expected.inspect %> but it did not.
 <% end %>

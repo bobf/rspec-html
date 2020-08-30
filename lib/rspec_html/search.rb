@@ -46,6 +46,13 @@ module RSpecHTML
       @element&.text&.gsub(/\s+/, ' ')&.strip || ''
     end
 
+    def truncated_text
+      max = RSpec::Support::ObjectFormatter.default_instance.max_formatted_output_length
+      return text if text.size <= max
+
+      "#{text[0..max]}...#{text[-max..-1]}"
+    end
+
     def size
       return @element.size if @element.respond_to?(:size)
 
