@@ -8,8 +8,7 @@ module RSpecHTML
     extend Forwardable
 
     def_delegators :@search,
-                   :has_css?, :has_xpath?, :include?, :present?, :exist?,
-                   :text, :size, :length, :[]
+                   :has_css?, :has_xpath?, :include?, :text, :size, :length, :[]
 
     def initialize(element, name, options: {}, siblings: [])
       @name = name
@@ -18,6 +17,13 @@ module RSpecHTML
       @siblings = siblings
       @search = Search.new(@element, @siblings)
     end
+
+    def present?
+      return true if name == :document
+
+      @search.present?
+    end
+    alias exist? present?
 
     def inspect
       "<#{self.class}::#{name.to_s.capitalize}>"
