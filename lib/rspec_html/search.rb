@@ -100,6 +100,7 @@ module RSpecHTML
                 else
                   where_xpath(tag, query)
                 end
+      return nil unless matched || all
       return matched&.first unless all
 
       matched
