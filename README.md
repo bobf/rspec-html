@@ -7,7 +7,7 @@ _RSpec::HTML_ provides a simple object interface to HTML responses from [_RSpec 
 Add the gem to your `Gemfile`:
 
 ```ruby
-gem 'rspec-html', '~> 0.2.5'
+gem 'rspec-html', '~> 0.2.6'
 ```
 
 And rebuild your bundle:
