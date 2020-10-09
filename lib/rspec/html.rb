@@ -11,11 +11,9 @@ module RSpec
     def document
       return @document if @document
 
-      if !defined?(response) || response.nil?
-        raise RSpecHTML::NoResponseError, 'No `response` object found. Make a request first.'
-      end
-
       RSpecHTML::Element.new(Nokogiri::HTML.parse(response.body), :document)
+    rescue NameError
+      raise RSpecHTML::NoResponseError, 'No `response` object found. Make a request first.'
     end
 
     def parse_html(content)
