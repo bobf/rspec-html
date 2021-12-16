@@ -6,82 +6,9 @@ Metrics/BlockLength:
 Gemspec/RequiredRubyVersion:
   Enabled: false
 
-Layout/LineLength:
-  Max: 100
+AllCops:
+  NewCops: enable
 
 # Compatibility with older (< 2.6) Rubies.
 Style/SlicingWithRange:
   Enabled: false
-
-Layout/EmptyLinesAroundAttributeAccessor:
-  Enabled: true
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
-Lint/DeprecatedOpenSSLConstant:
-  Enabled: true
-Lint/DuplicateElsifCondition:
-  Enabled: true
-Lint/MixedRegexpCaptureTypes:
-  Enabled: true
-Lint/RaiseException:
-  Enabled: true
-Lint/StructNewOverride:
-  Enabled: true
-Style/AccessorGrouping:
-  Enabled: true
-Style/ArrayCoercion:
-  Enabled: true
-Style/BisectedAttrAccessor:
-  Enabled: true
-Style/CaseLikeIf:
-  Enabled: true
-Style/ExponentialNotation:
-  Enabled: true
-Style/HashAsLastArrayItem:
-  Enabled: true
-Style/HashEachMethods:
-  Enabled: true
-Style/HashLikeCase:
-  Enabled: true
-Style/HashTransformKeys:
-  Enabled: true
-Style/HashTransformValues:
-  Enabled: true
-Style/RedundantAssignment:
-  Enabled: true
-Style/RedundantFetchBlock:
-  Enabled: true
-Style/RedundantFileExtensionInRequire:
-  Enabled: true
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-Style/RedundantRegexpEscape:
-  Enabled: true
-Lint/BinaryOperatorWithIdenticalOperands:
-  Enabled: true
-Lint/DuplicateRescueException:
-  Enabled: true
-Lint/EmptyConditionalBody:
-  Enabled: true
-Lint/FloatComparison:
-  Enabled: true
-Lint/MissingSuper:
-  Enabled: true
-Lint/OutOfRangeRegexpRef:
-  Enabled: true
-Lint/SelfAssignment:
-  Enabled: true
-Lint/TopLevelReturnWithArgument:
-  Enabled: true
-Lint/UnreachableLoop:
-  Enabled: true
-Style/ExplicitBlockArgument:
-  Enabled: true
-Style/GlobalStdStream:
-  Enabled: true
-Style/OptionalBooleanParameter:
-  Enabled: true
-Style/SingleArgumentDig:
-  Enabled: true
-Style/StringConcatenation:
-  Enabled: true
