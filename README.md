@@ -7,7 +7,7 @@ _RSpec::HTML_ provides a simple object interface to HTML responses from [_RSpec 
 Add the gem to your `Gemfile`:
 
 ```ruby
-gem 'rspec-html', '~> 0.2.7'
+gem 'rspec-html', '~> 0.2.8'
 ```
 
 And rebuild your bundle:
@@ -112,12 +112,15 @@ expect(document.body).to have_xpath '//html/body/div[@class="myclass"]'
 ### Custom Matchers
 <a name="matchers"></a>
 
-#### contain_text
+#### match_text
 
-Use the `contain_text` matcher to locate text within a _DOM_ element. All mark-up elements are stripped when using this matcher.
+Use the `match_text` matcher to locate text within a _DOM_ element. All mark-up elements are stripped when using this matcher.
+
+This matcher receives either a string or a regular expression.
 
 ```ruby
-expect(document.body.form).to contain_text 'Please enter your password'
+expect(document.body.form).to match_text 'Please enter your password'
+expect(document.body.form).to match_text /Please enter your [a-z]+/
 ```
 
 #### contain_tag

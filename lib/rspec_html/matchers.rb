@@ -3,6 +3,7 @@
 require 'rspec_html/matchers/base'
 require 'rspec_html/matchers/contain_text'
 require 'rspec_html/matchers/contain_tag'
+require 'rspec_html/matchers/match_text'
 
 module RSpecHTML
   # Provides matchers for identifying elements and text within a DOM element.
@@ -29,5 +30,6 @@ module RSpecHTML
 
     define_matcher(:contain_text, ContainText)
     define_matcher(:contain_tag, ContainTag)
+    define_matcher(:match_text, MatchText)
   end
 end
