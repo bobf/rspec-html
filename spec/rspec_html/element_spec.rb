@@ -36,6 +36,12 @@ RSpec.describe RSpecHTML::Element do
       let(:options) { { text: 'some text' } }
       it { is_expected.to eql '<span>some text</span>' }
     end
+
+    context 'tag with string css selector' do
+      let(:tag) { :span }
+      let(:options) { '#id.class' }
+      it { is_expected.to eql '<span#id.class />' }
+    end
   end
 
   describe 'recursive tag traversal' do
@@ -63,6 +69,19 @@ RSpec.describe RSpecHTML::Element do
     end
   end
 
+  describe 'traversal by css selector string' do
+    subject { element.body.span(selector) }
+    context 'expected element exists' do
+      let(:selector) { '#example-id.example-class1.example-class2' }
+      it { is_expected.to be_present }
+    end
+
+    context 'expected element does not exist' do
+      let(:selector) { '#example-id.example-class1.missing-class' }
+      it { is_expected.to_not be_present }
+    end
+  end
+
   describe 'traversal by text' do
     subject { element.body.span(text: text) }
     context 'expected text exists' do
@@ -70,7 +89,7 @@ RSpec.describe RSpecHTML::Element do
       it { is_expected.to be_present }
     end
 
-    context 'expected does not text exist' do
+    context 'expected text does not exist' do
       let(:text) { 'some example missing content' }
       it { is_expected.to_not be_present }
     end
@@ -107,12 +126,12 @@ RSpec.describe RSpecHTML::Element do
 
   describe '#size' do
     subject { element.body.span.size }
-    it { is_expected.to eql 2 }
+    it { is_expected.to eql 3 }
   end
 
   describe '#size' do
     subject { element.body.span.length }
-    it { is_expected.to eql 2 }
+    it { is_expected.to eql 3 }
   end
 
   it { is_expected.to exist }

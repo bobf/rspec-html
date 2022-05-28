@@ -2,6 +2,7 @@
 
 module RSpecHTML
   # Provides element/attribute/text searching for HTML entities
+  # rubocop:disable Metrics/ClassLength
   class Search
     def initialize(element, siblings)
       @element = element
@@ -95,15 +96,21 @@ module RSpecHTML
     end
 
     def where(tag, query, all: false)
-      matched = if query[:class]
-                  where_class(tag, query[:class]) & where_xpath(tag, query.merge(class: nil))
-                else
-                  where_xpath(tag, query)
-                end
+      matched = matched_from_query(tag, query)
       return nil unless matched || all
       return matched&.first unless all
 
       matched
+    end
+
+    def matched_from_query(tag, query)
+      if query.is_a?(String)
+        @element&.css("#{tag}#{query}")
+      elsif query[:class]
+        where_class(tag, query[:class]) & where_xpath(tag, query.merge(class: nil))
+      else
+        where_xpath(tag, query)
+      end
     end
 
     def where_xpath(tag, query)
@@ -132,4 +139,5 @@ module RSpecHTML
       @element&.css(tag.to_s)
     end
   end
+  # rubocop:enable Metrics/ClassLength
 end

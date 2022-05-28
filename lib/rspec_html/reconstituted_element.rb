@@ -12,6 +12,7 @@ module RSpecHTML
       name = @tag.to_s.downcase
       return '#document' if name == 'document'
       return name if name == 'document'
+      return "<#{name}#{@options} />" if @options.is_a?(String)
       return "<#{name}#{formatted_attributes} />" unless @options&.key?(:text)
 
       "<#{name}#{formatted_attributes}>#{@options[:text]}</#{name}>"

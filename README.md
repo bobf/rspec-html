@@ -7,7 +7,7 @@ _RSpec::HTML_ provides a simple object interface to HTML responses from [_RSpec 
 Add the gem to your `Gemfile`:
 
 ```ruby
-gem 'rspec-html', '~> 0.2.8'
+gem 'rspec-html', '~> 0.2.9'
 ```
 
 And rebuild your bundle:
@@ -62,6 +62,17 @@ expect(document.body.div(id: 'my-div').span(class: 'my-class my-other-class')).t
 ```
 
 Classes can be provided in any order, i.e. `'my-class my-other-class'` is equivalent to `'my-other-class my-class'`.
+
+#### Simple CSS Matching
+To use a simple CSS selector when no other attributes are needed, pass a string to the tag method:
+```ruby
+expect(document.body.div('#my-id.my-class1.my-class2')).to contain_text 'some text'
+```
+
+This is effectively shorthand for:
+```ruby
+expect(document.body.div(id: 'my-id', class: 'my-class1 my-class2')).to contain_text 'some text'
+```
 
 #### Text Matching
 To select an element that includes a given text string (i.e. excluding mark-up) use the `text` option:
