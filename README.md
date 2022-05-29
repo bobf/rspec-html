@@ -41,6 +41,11 @@ it 'says hello' do
 end
 ```
 
+This method can also be used for _ActionMailer_ emails:
+```ruby
+before { parse_html(ActionMailer::Base.deliveries.last.body.decoded) }
+```
+
 To navigate the _DOM_ by a sequence of tag names use chained method calls on the `document` object:
 
 #### Tag Traversal
