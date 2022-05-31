@@ -57,7 +57,7 @@ module RSpecHTML
     def size
       return @element.size if @element.respond_to?(:size)
 
-      @siblings.size
+      @siblings&.size || 0
     end
     alias length size
 
