@@ -22,6 +22,7 @@ RSpec.describe RSpecHTML::Matchers do
     it { is_expected.to match_text(/example [body]+ content/) }
     it { is_expected.to_not match_text(/example [xyz]+ content/) }
     it { is_expected.to_not match_text(/non-existent body content/) }
+    its(:span) { is_expected.to match_text 'more example body content' }
     its(:p) { is_expected.to match_text(/Paragraph [a-z]+ spacing/) }
   end
 end

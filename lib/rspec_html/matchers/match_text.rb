@@ -10,9 +10,27 @@ module RSpecHTML
 
       def match(actual)
         @rspec_actual = actual&.text
-        return (actual&.text || '').include?(@expected.to_s) unless @expected.is_a?(Regexp)
+        return regexp_match?(actual) || regexp_siblings_match?(actual) if @expected.is_a?(Regexp)
 
+        string_match?(actual) || string_siblings_match?(actual)
+      end
+
+      private
+
+      def regexp_match?(actual)
         @expected.match(actual&.text || '')
+      end
+
+      def regexp_siblings_match?(actual)
+        actual.siblings.any? { |sibling| @expected.match(sibling&.text || '') }
+      end
+
+      def string_match?(actual)
+        (actual&.text || '').include?(@expected.to_s)
+      end
+
+      def string_siblings_match?(actual)
+        actual.siblings.any? { |sibling| (sibling&.text || '').include?(@expected.to_s) }
       end
     end
   end

@@ -4,6 +4,8 @@ module RSpecHTML
   # Provides element/attribute/text searching for HTML entities
   # rubocop:disable Metrics/ClassLength
   class Search
+    attr_reader :siblings
+
     def initialize(element, siblings)
       @element = element
       @siblings = siblings

@@ -8,7 +8,10 @@ module RSpecHTML
     extend Forwardable
 
     def_delegators :@search,
-                   :has_css?, :has_xpath?, :include?, :text, :truncated_text, :size, :length, :css, :xpath, :[]
+                   :has_css?, :has_xpath?, :include?,
+                   :siblings, :text, :truncated_text,
+                   :size, :length, :[],
+                   :css, :xpath
 
     def initialize(element, name, options: {}, siblings: [])
       @name = name
