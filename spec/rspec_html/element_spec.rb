@@ -39,8 +39,8 @@ RSpec.describe RSpecHTML::Element do
 
     context 'tag with string css selector' do
       let(:tag) { :span }
-      let(:options) { '#id.class' }
-      it { is_expected.to eql '<span#id.class />' }
+      let(:options) { '#id.class1.class2' }
+      it { is_expected.to eql '<span id="id" class="class1 class2" />' }
     end
   end
 

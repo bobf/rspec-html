@@ -12,7 +12,7 @@ module RSpecHTML
       name = @tag.to_s.downcase
       return '#document' if name == 'document'
       return name if name == 'document'
-      return "<#{name}#{@options} />" if @options.is_a?(String)
+      return "<#{name}#{shorthand_options} />" if @options.is_a?(String)
       return "<#{name}#{formatted_attributes} />" unless @options&.key?(:text)
 
       "<#{name}#{formatted_attributes}>#{@options[:text]}</#{name}>"
@@ -32,6 +32,24 @@ module RSpecHTML
 
     def formatted_attributes
       mapped_attributes.empty? ? nil : " #{mapped_attributes.join(' ')}"
+    end
+
+    def shorthand_options
+      case @options[0]
+      when '.'
+        " #{shorthand_classes}"
+      when '#'
+        options = %( id="#{@options.partition('#').last.partition('.').first}")
+        shorthand_classes.nil? ? options : "#{options} #{shorthand_classes}"
+      else
+        @options
+      end
+    end
+
+    def shorthand_classes
+      return nil unless @options.include?('.')
+
+      %(class="#{@options.partition('.').last.split('.').map(&:strip).reject(&:empty?).join(' ')}")
     end
   end
 end

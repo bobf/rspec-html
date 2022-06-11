@@ -29,7 +29,7 @@ module RSpecHTML
     alias exist? present?
 
     def inspect
-      "<#{self.class}::#{name.to_s.capitalize}>"
+      reconstituted
     end
 
     def to_s
