@@ -17,7 +17,7 @@ module RSpecHTML
       @name = name
       @element = element
       @options = options
-      @siblings = siblings
+      @siblings = siblings || []
       @search = Search.new(@element, @siblings)
     end
 
