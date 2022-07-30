@@ -134,6 +134,11 @@ RSpec.describe RSpecHTML::Element do
     it { is_expected.to eql 3 }
   end
 
+  describe '#attributes' do
+    subject { element.body.input.attributes }
+    it { is_expected.to eql({ name: 'example', type: 'checkbox', checked: 'checked' }) }
+  end
+
   it { is_expected.to exist }
 
   describe '#present?' do

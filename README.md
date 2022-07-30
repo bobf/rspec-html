@@ -59,6 +59,11 @@ To select an element matching certain attributes pass a hash to any of the chain
 expect(document.body.div(id: 'my-div').span(align: 'left')).to contain_text 'some text'
 ```
 
+Special attributes like `checked` can be found using the `#attributes` method:
+```ruby
+expect(document.input(type: 'checkbox', name: 'my-name')).attributes).to include 'checked'
+```
+
 #### Class Matching
 _CSS_ classes are treated as a special case: to select an element matching a set of classes pass the `class` parameter:
 ```ruby

@@ -11,6 +11,10 @@ module RSpecHTML
       @siblings = siblings
     end
 
+    def to_s
+      @element&.to_s
+    end
+
     def include?(val)
       text.include?(val)
     end
@@ -54,6 +58,10 @@ module RSpecHTML
       return text if text.size <= max
 
       "#{text[0..max]}...#{text[-max..-1]}"
+    end
+
+    def attributes
+      @element&.attributes&.to_h { |key, val| [key.to_sym, val.to_s] } || {}
     end
 
     def size
