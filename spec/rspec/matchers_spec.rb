@@ -24,5 +24,11 @@ RSpec.describe RSpecHTML::Matchers do
     it { is_expected.to_not match_text(/non-existent body content/) }
     its(:span) { is_expected.to match_text 'more example body content' }
     its(:p) { is_expected.to match_text(/Paragraph [a-z]+ spacing/) }
+
+    context 'with unexpected argument' do
+      it 'raises ArgumentError' do
+        expect { expect('foo').to match_text 'bar' }.to raise_error ArgumentError
+      end
+    end
   end
 end
