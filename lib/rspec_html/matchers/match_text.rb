@@ -35,7 +35,7 @@ module RSpecHTML
       end
 
       def raise_argument_error
-        raise ArumentError, 'Expected RSpecHTML::Element with `match_text` matcher.'
+        raise ArgumentError, 'Expected RSpecHTML::Element with `match_text` matcher.'
       end
     end
   end
