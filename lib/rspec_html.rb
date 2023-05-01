@@ -15,6 +15,7 @@ require 'rspec_html/matchers'
 module RSpecHTML
   class Error < StandardError; end
   class NoResponseError < Error; end
+  class ElementNotFoundError < Error; end
 
   def self.root
     Pathname.new(__dir__).parent

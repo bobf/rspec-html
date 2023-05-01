@@ -6,9 +6,10 @@ module RSpecHTML
   class Search
     attr_reader :siblings
 
-    def initialize(element, siblings)
+    def initialize(element, siblings, element_wrapper)
       @element = element
       @siblings = siblings
+      @element_wrapper = element_wrapper
     end
 
     def to_s
@@ -31,6 +32,12 @@ module RSpecHTML
       !@element.nil?
     end
     alias exist? present?
+
+    def checked?
+      raise ElementNotFoundError, "Element does not exist: #{element_wrapper.reconstituted}" if @element.nil?
+
+      @element.attributes.key?('checked')
+    end
 
     # rubocop:disable Naming/PredicateName
     def has_css?(*args)
@@ -91,14 +98,16 @@ module RSpecHTML
 
     private
 
+    attr_reader :element_wrapper
+
     def index(val)
       zero_index_error if val.zero?
-      self.class.new(@siblings[val - 1], @element.name)
+      self.class.new(@siblings[val - 1], @element.name, element_wrapper)
     end
 
     def range(val)
       zero_index_error if val.first.zero?
-      self.class.new(@siblings[(val.first - 1)..(val.last - 1)], :range)
+      self.class.new(@siblings[(val.first - 1)..(val.last - 1)], :range, element_wrapper)
     end
 
     def zero_index_error

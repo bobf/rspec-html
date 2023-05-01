@@ -11,14 +11,14 @@ module RSpecHTML
                    :has_css?, :has_xpath?, :include?,
                    :siblings, :text, :truncated_text, :attributes,
                    :size, :length, :[],
-                   :css, :xpath
+                   :css, :xpath, :checked?
 
     def initialize(element, name, options: {}, siblings: [])
       @name = name
       @element = element
       @options = options
       @siblings = siblings || []
-      @search = Search.new(@element, @siblings)
+      @search = Search.new(@element, @siblings, self)
     end
 
     def present?

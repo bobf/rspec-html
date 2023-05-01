@@ -155,6 +155,20 @@ RSpec.describe RSpecHTML::Element do
     end
   end
 
+  describe '#checked' do
+    subject(:checked) { element.checked? }
+
+    context 'checked' do
+      let(:element) { document.input(type: 'checkbox', checked: 'checked') }
+      it { is_expected.to be true }
+    end
+
+    context 'not checked' do
+      let(:element) { document.input(type: 'checkbox') }
+      it { is_expected.to be true }
+    end
+  end
+
   describe '#has_css?' do
     subject(:has_css?) { element.has_css?(match) }
 

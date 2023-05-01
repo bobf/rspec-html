@@ -130,6 +130,13 @@ expect(document.body).to have_css 'html body div.myclass'
 expect(document.body).to have_xpath '//html/body/div[@class="myclass"]'
 ```
 
+#### Checkboxes
+
+Use `be_checked` to test if a checkbox is checked:
+```ruby
+expect(document.input(type: 'checkbox')).to be_checked
+```
+
 ### Custom Matchers
 <a name="matchers"></a>
 
