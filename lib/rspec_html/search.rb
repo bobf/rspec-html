@@ -39,6 +39,12 @@ module RSpecHTML
       @element.attributes.key?('checked')
     end
 
+    def all
+      return [] if @siblings.nil?
+
+      @siblings.map { |sibling| Element.new(sibling, @element&.name) }
+    end
+
     # rubocop:disable Naming/PredicateName
     def has_css?(*args)
       !@element&.css(*args)&.empty?

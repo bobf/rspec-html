@@ -9,7 +9,7 @@ module RSpecHTML
 
     def_delegators :@search,
                    :has_css?, :has_xpath?, :include?,
-                   :siblings, :text, :truncated_text, :attributes,
+                   :all, :siblings, :text, :truncated_text, :attributes,
                    :size, :length, :[],
                    :css, :xpath, :checked?
 

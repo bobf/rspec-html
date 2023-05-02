@@ -100,6 +100,12 @@ RSpec.describe RSpecHTML::Element do
     it { is_expected.to eql 'example-class' }
   end
 
+  describe '#all' do
+    subject { document.span.all }
+    it { is_expected.to be_all(RSpecHTML::Element) }
+    its(:size) { is_expected.to eql 3 }
+  end
+
   describe '["string"]' do
     subject { element.body.span(class: 'another-class')['data-value'] }
     it { is_expected.to eql 'a data value' }

@@ -97,6 +97,12 @@ expect(document.body.div.span[:class]).to contain_text 'my-class'
 expect(document.body.div.span['data-content']).to contain_text 'my content'
 ```
 
+#### Retrieve all matching elements
+To select all matching elements as an array, use `#all`:
+```ruby
+expect(document.span.all.map(&:text)).to eql ['foo', 'bar', 'baz']
+```
+
 #### Indexing a Matching Set
 To select an index from a set of matched elements use the array-style interface (the first matching element is `1`, not `0`):
 ```ruby
