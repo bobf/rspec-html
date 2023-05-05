@@ -2,6 +2,6 @@
 
 module RSpec
   module HTML
-    VERSION = '0.2.17'
+    VERSION = '0.2.18'
   end
 end

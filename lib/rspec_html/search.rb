@@ -21,11 +21,11 @@ module RSpecHTML
     end
 
     def css(*args)
-      self.class.new(@element&.css(*args), :css)
+      self.class.new(@element&.css(*args), :css, element_wrapper)
     end
 
     def xpath(*args)
-      self.class.new(@element&.xpath(*args), :xpath)
+      self.class.new(@element&.xpath(*args), :xpath, element_wrapper)
     end
 
     def present?

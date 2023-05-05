@@ -202,4 +202,14 @@ RSpec.describe RSpecHTML::Element do
       it { is_expected.to be false }
     end
   end
+
+  describe '#css' do
+    subject(:css) { element.css('.body.span') }
+    it { is_expected.to be_a RSpecHTML::Search }
+  end
+
+  describe '#xpath' do
+    subject(:css) { element.xpath('//html/body/span') }
+    it { is_expected.to be_a RSpecHTML::Search }
+  end
 end
