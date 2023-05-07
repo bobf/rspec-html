@@ -3,13 +3,13 @@
 module RSpecHTML
   # HTML DOM element abstraction
   class Element
-    attr_reader :name, :element
+    attr_reader :name, :element, :search
 
     extend Forwardable
 
     def_delegators :@search,
                    :has_css?, :has_xpath?, :include?,
-                   :all, :siblings, :text, :truncated_text, :attributes,
+                   :all, :siblings, :text, :truncated_text, :attributes, :to_a,
                    :size, :length, :[],
                    :css, :xpath, :checked?
 

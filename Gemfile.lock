@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rspec-html (0.2.18)
+    rspec-html (0.2.19)
       nokogiri (~> 1.10)
       rspec (~> 3.0)
 
@@ -15,7 +15,9 @@ GEM
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     json (2.6.3)
-    nokogiri (1.13.10-x86_64-linux)
+    mini_portile2 (2.8.2)
+    nokogiri (1.13.10)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     paint (2.3.0)
     parallel (1.23.0)

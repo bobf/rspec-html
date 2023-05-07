@@ -16,6 +16,10 @@ module RSpecHTML
       @element&.to_s
     end
 
+    def to_a
+      all.to_a
+    end
+
     def include?(val)
       text.include?(val)
     end
@@ -140,7 +144,7 @@ module RSpecHTML
 
     def where_xpath(tag, query)
       conditions = "[#{where_conditions(query)}]" unless query.compact.empty?
-      @element&.xpath("//#{tag}#{conditions}")
+      @element&.xpath(".//#{tag}#{conditions}")
     end
 
     def where_conditions(query)

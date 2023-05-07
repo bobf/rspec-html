@@ -104,6 +104,18 @@ RSpec.describe RSpecHTML::Element do
     subject { document.span.all }
     it { is_expected.to be_all(RSpecHTML::Element) }
     its(:size) { is_expected.to eql 3 }
+
+    context 'with matching elements outside of provided scope' do
+      subject { document.form('.example-form').input(type: 'text').all }
+
+      let(:html) { Nokogiri::HTML.parse(fixture(:html, :form_elements_in_different_scopes).read) }
+
+      its(:size) { is_expected.to eql 2 }
+
+      it 'includes exactly the correct elements' do
+        expect(subject.map { |element| element[:name] }).to eql %w[foo bar]
+      end
+    end
   end
 
   describe '["string"]' do
