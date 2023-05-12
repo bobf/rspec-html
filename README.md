@@ -109,6 +109,13 @@ To select an index from a set of matched elements use the array-style interface 
 expect(document.body.div[1].span[1][:class]).to contain_text 'my-class'
 ```
 
+Alternatively, use `#first`, `#last` or, when using _ActiveSupport_, `#second`, `#third`, etc. are also available:
+
+```ruby
+expect(document.body.div.first.span.last[:class]).to contain_text 'my-class'
+```
+
+
 #### Element Existence
 To test if a matching element was found use the `exist` matcher:
 ```ruby

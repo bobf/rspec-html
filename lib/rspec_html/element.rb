@@ -11,7 +11,8 @@ module RSpecHTML
                    :has_css?, :has_xpath?, :include?,
                    :all, :siblings, :text, :truncated_text, :attributes, :to_a,
                    :size, :length, :[],
-                   :css, :xpath, :checked?
+                   :css, :xpath, :checked?,
+                   :first, :last, :second, :third, :fourth, :fifth
 
     def initialize(element, name, options: {}, siblings: [])
       @name = name

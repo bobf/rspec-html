@@ -4,6 +4,7 @@ require 'bundler/setup'
 require 'rspec/its'
 require 'i18n'
 require 'devpack'
+require 'active_support/core_ext/array/access' # Provides #second, #third, #fourth etc.
 
 require 'rspec/html'
 require 'rspec_html'

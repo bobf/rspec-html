@@ -215,6 +215,14 @@ RSpec.describe RSpecHTML::Element do
     end
   end
 
+  %i[first last second third fourth fifth].each do |method|
+    describe "##{method}" do
+      subject(method) { element.label.public_send(method) }
+
+      its([:id]) { is_expected.to eql "label-#{method}" }
+    end
+  end
+
   describe '#css' do
     subject(:css) { element.css('.body.span') }
     it { is_expected.to be_a RSpecHTML::Search }

@@ -6,6 +6,11 @@ module RSpecHTML
   class Search
     attr_reader :siblings
 
+    extend Forwardable
+
+    def_delegators :to_a,
+                   :first, :last, :second, :third, :fourth, :fifth
+
     def initialize(element, siblings, element_wrapper)
       @element = element
       @siblings = siblings
