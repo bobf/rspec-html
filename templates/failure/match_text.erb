@@ -1,5 +1,13 @@
 <% unless actual.exist? %>
-Expected <%= actual.reconstituted %> to match <%= expected.inspect %> but the element did not exist.
+  <% if @expected_count.nil? %>
+    Expected <%= actual.reconstituted %> to match <%= expected.inspect %> but the element did not exist.
+  <% else %>
+    Expected <%= actual.reconstituted %> to match <%= expected.inspect %> <%= @expected_count_type.to_s.tr('_', ' ') %> <%= pluralize(@expected_count, 'time') %> but the element did not exist.
+  <% end %>
 <% else %>
-Expected text in <%= actual.reconstituted %> <%= (actual.truncated_text).inspect %> to match <%= expected.inspect %> but it did not.
+  <% if @expected_count.nil? %>
+    Expected text in <%= actual.reconstituted %> <%= (actual.truncated_text).inspect %> to match <%= expected.inspect %> but it did not.
+  <% else %>
+    Expected text in <%= actual.reconstituted %> <%= (actual.truncated_text).inspect %> to match <%= @expected_count_type.to_s.tr('_', ' ') %> <%= expected.inspect %> exactly <%= pluralize(@expected_count, 'time') %> but it was matched <%= pluralize(@actual_count, 'time') %>.
+  <% end %>
 <% end %>

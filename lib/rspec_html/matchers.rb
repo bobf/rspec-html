@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rspec_html/matchers/base'
-require 'rspec_html/matchers/contain_text'
 require 'rspec_html/matchers/contain_tag'
 require 'rspec_html/matchers/match_text'
 
@@ -18,17 +17,19 @@ module RSpecHTML
         match do |actual|
           rspec_html_matcher
             .save_actual(actual)
-            .match(actual)
+            .match(actual, expected_count: @expected_count, expected_count_type: @expected_count_type)
             .tap { @actual = rspec_html_matcher.rspec_actual }
         end
         description { rspec_html_matcher.description }
+
+        include Countable
+
         failure_message { rspec_html_matcher.failure_message }
         diffable if class_.diffable?
       end
     end
     # rubocop:enable Metrics/MethodLength
 
-    define_matcher(:contain_text, ContainText)
     define_matcher(:contain_tag, ContainTag)
     define_matcher(:match_text, MatchText)
   end

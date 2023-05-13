@@ -5,11 +5,14 @@ module RSpecHTML
     # Matches text or regex within a given DOM element (strips HTML tags and compares text content only).
     class MatchText
       include Base
+      include Countable
 
       diffable
 
-      def match(actual)
+      def match(actual, expected_count:, expected_count_type:)
         raise_argument_error unless actual.is_a?(RSpecHTML::Element)
+        @expected_count = expected_count
+        @expected_count_type = expected_count_type
         @rspec_actual = actual&.text
         return regexp_match?(actual) || regexp_siblings_match?(actual) if @expected.is_a?(Regexp)
 
@@ -19,7 +22,10 @@ module RSpecHTML
       private
 
       def regexp_match?(actual)
-        @expected.match(actual&.text || '')
+        return @expected.match(actual&.text || '') if @expected_count.nil?
+
+        @actual_count = actual&.text&.scan(@expected)&.size
+        count_match?
       end
 
       def regexp_siblings_match?(actual)
@@ -27,7 +33,10 @@ module RSpecHTML
       end
 
       def string_match?(actual)
-        (actual&.text || '').include?(@expected.to_s)
+        return (actual&.text || '').include?(@expected.to_s) if @expected_count.nil?
+
+        @actual_count = actual&.text&.scan(@expected)&.size
+        count_match?
       end
 
       def string_siblings_match?(actual)

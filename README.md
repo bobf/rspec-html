@@ -7,7 +7,7 @@ _RSpec::HTML_ provides a simple object interface to HTML responses from [_RSpec 
 Add the gem to your `Gemfile`:
 
 ```ruby
-gem 'rspec-html', '~> 0.2.13'
+gem 'rspec-html', '~> 0.3.0'
 ```
 
 And rebuild your bundle:
@@ -35,28 +35,31 @@ The top-level object `document` is available in all tests which reflects the cur
 If you need to parse _HTML_ manually you can use the provided `parse_html` helper and then access `document` as normal:
 
 ```ruby
-before { parse_html('<html><body>hello</body></html>') }
+let(:document) { parse_html('<html><body>hello</body></html>') }
+
 it 'says hello' do
-  expect(document.body).to contain_text 'hello'
+  expect(document.body).to match_text 'hello'
 end
 ```
 
 This method can also be used for _ActionMailer_ emails:
 ```ruby
-before { parse_html(ActionMailer::Base.deliveries.last.body.decoded) }
+let(:document) { parse_html(ActionMailer::Base.deliveries.last.body.decoded) }
 ```
+
+**Changed in 0.3.0**: `parse_html` no longer sets the `document` automatically, you must use a `let` block to assign it yourself.
 
 To navigate the _DOM_ by a sequence of tag names use chained method calls on the `document` object:
 
 #### Tag Traversal
 ```ruby
-expect(document.body.div.span).to contain_text 'some text'
+expect(document.body.div.span).to match_text 'some text'
 ```
 
 #### Attribute Matching
 To select an element matching certain attributes pass a hash to any of the chained methods:
 ```ruby
-expect(document.body.div(id: 'my-div').span(align: 'left')).to contain_text 'some text'
+expect(document.body.div(id: 'my-div').span(align: 'left')).to match_text 'some text'
 ```
 
 Special attributes like `checked` can be found using the `#attributes` method:
@@ -67,8 +70,8 @@ expect(document.input(type: 'checkbox', name: 'my-name')).attributes).to include
 #### Class Matching
 _CSS_ classes are treated as a special case: to select an element matching a set of classes pass the `class` parameter:
 ```ruby
-expect(document.body.div(id: 'my-div').span(class: 'my-class')).to contain_text 'some text'
-expect(document.body.div(id: 'my-div').span(class: 'my-class my-other-class')).to contain_text 'some text'
+expect(document.body.div(id: 'my-div').span(class: 'my-class')).to match_text 'some text'
+expect(document.body.div(id: 'my-div').span(class: 'my-class my-other-class')).to match_text 'some text'
 ```
 
 Classes can be provided in any order, i.e. `'my-class my-other-class'` is equivalent to `'my-other-class my-class'`.
@@ -76,12 +79,25 @@ Classes can be provided in any order, i.e. `'my-class my-other-class'` is equiva
 #### Simple CSS Matching
 To use a simple CSS selector when no other attributes are needed, pass a string to the tag method:
 ```ruby
-expect(document.body.div('#my-id.my-class1.my-class2')).to contain_text 'some text'
+expect(document.body.div('#my-id.my-class1.my-class2')).to match_text 'some text'
 ```
 
 This is effectively shorthand for:
 ```ruby
-expect(document.body.div(id: 'my-id', class: 'my-class1 my-class2')).to contain_text 'some text'
+expect(document.body.div(id: 'my-id', class: 'my-class1 my-class2')).to match_text 'some text'
+```
+
+#### Counting Matchers
+Use `once`, `twice`, `times`, `at_least`, and `at_most` to match element counts:
+```ruby
+expect(document.div('.my-class')).to match_text('some text').once
+expect(document.div('.my-class')).to match_text('some other text').twice
+expect(document.div('.my-class')).to match_text('some').times(3)
+expect(document.div('.my-class')).to match_text('some').at_least(:twice)
+expect(document.div('.my-class')).to match_text('some').at_least.times(3)
+expect(document.div('.my-class')).to match_text('some text').at_most.once
+expect(document.div('.my-class')).to match_text('some other text').at_most.twice
+expect(document.div('.my-class')).to match_text('text').at_most.times(3)
 ```
 
 #### Text Matching
@@ -93,8 +109,8 @@ expect(document.body.div(text: 'some text').input[:value]).to eql 'some-value'
 #### Attribute Retrieval
 To select an attribute from an element use the hash-style interface:
 ```ruby
-expect(document.body.div.span[:class]).to contain_text 'my-class'
-expect(document.body.div.span['data-content']).to contain_text 'my content'
+expect(document.body.div.span[:class]).to match_text 'my-class'
+expect(document.body.div.span['data-content']).to match_text 'my content'
 ```
 
 #### Retrieve all matching elements
@@ -106,13 +122,13 @@ expect(document.span.all.map(&:text)).to eql ['foo', 'bar', 'baz']
 #### Indexing a Matching Set
 To select an index from a set of matched elements use the array-style interface (the first matching element is `1`, not `0`):
 ```ruby
-expect(document.body.div[1].span[1][:class]).to contain_text 'my-class'
+expect(document.body.div[1].span[1][:class]).to match_text 'my-class'
 ```
 
 Alternatively, use `#first`, `#last` or, when using _ActiveSupport_, `#second`, `#third`, etc. are also available:
 
 ```ruby
-expect(document.body.div.first.span.last[:class]).to contain_text 'my-class'
+expect(document.body.div.first.span.last[:class]).to match_text 'my-class'
 ```
 
 
@@ -133,8 +149,8 @@ expect(document.body.div.length).to eql 3
 #### XPath / CSS Selectors
 If you need something more specific you can always use the _Nokogiri_ `#xpath` and `#css` methods on any element:
 ```ruby
-expect(document.body.xpath('//span[@class="my-class"]')).to contain_text 'some text'
-expect(document.body.css('span.my-class')).to contain_text 'some text'
+expect(document.body.xpath('//span[@class="my-class"]')).to match_text 'some text'
+expect(document.body.css('span.my-class')).to match_text 'some text'
 ```
 
 To simply check that an _XPath_ or _CSS_ selector exists use `have_xpath` and `have_css`:
@@ -152,6 +168,8 @@ expect(document.input(type: 'checkbox')).to be_checked
 
 ### Custom Matchers
 <a name="matchers"></a>
+
+**Changed in 0.3.0**: The `contain_text` matcher has been removed. Use `match_text` instead.
 
 #### match_text
 

@@ -9,6 +9,7 @@ require 'rspec_html/tags'
 require 'rspec_html/element'
 require 'rspec_html/search'
 require 'rspec_html/reconstituted_element'
+require 'rspec_html/countable'
 require 'rspec_html/matchers'
 
 # Support module for rspec/html

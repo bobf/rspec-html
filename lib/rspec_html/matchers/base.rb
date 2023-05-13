@@ -42,6 +42,12 @@ module RSpecHTML
         RSpecHTML::Element.reconstituted(element, options)
       end
 
+      def pluralize(number, string)
+        return "#{number} #{string}" if number == 1
+
+        "#{number} #{string}s"
+      end
+
       private
 
       def template(type, options, expected, actual = nil)
