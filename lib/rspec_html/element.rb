@@ -22,6 +22,16 @@ module RSpecHTML
       @search = Search.new(@element, @siblings, self)
     end
 
+    def open
+      Browser.open(html_path)
+    end
+
+    def html_path
+      @html_path ||= Pathname.new(Dir.mktmpdir('rspec-html')).join('document.html').tap do |path|
+        path.write(@element.inner_html)
+      end
+    end
+
     def present?
       return true if name == :document
 

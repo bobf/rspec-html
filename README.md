@@ -27,6 +27,19 @@ require 'rspec/html'
 
 Several [matchers](#matchers) are provided to identify text and _HTML_ elements within the _DOM_. These matchers can only be used with the provided [object interface](#object-interface).
 
+### Browser Inspection
+
+To open the current document in your operating system's default browser, call `document.open`. Use this to inspect _HTML_ content while debugging.
+
+```ruby
+it 'has complex HTML' do
+  get '/my/path'
+  document.open
+end
+```
+
+Alternatively `document.html_path` writes the current document to a temporary file and returns its path.
+
 ### Object Interface
 <a name="object-interface"></a>
 
@@ -47,7 +60,7 @@ This method can also be used for _ActionMailer_ emails:
 let(:document) { parse_html(ActionMailer::Base.deliveries.last.body.decoded) }
 ```
 
-**Changed in 0.3.0**: `parse_html` no longer sets the `document` automatically, you must use a `let` block to assign it yourself.
+**Changed in 0.3.0**: `parse_html` no longer assigns `document` automatically, you must use a `let` block to assign it yourself.
 
 To navigate the _DOM_ by a sequence of tag names use chained method calls on the `document` object:
 
