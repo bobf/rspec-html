@@ -29,7 +29,11 @@ module RSpecHTML
       end
 
       def regexp_siblings_match?(actual)
-        actual.siblings.any? { |sibling| @expected.match(sibling&.text || '') }
+        matching_siblings = actual.siblings.select { |sibling| @expected.match(sibling&.text || '') }
+        @actual_count = matching_siblings.size
+        return matching_siblings.size.positive? if @expected_count.nil?
+
+        matching_siblings.size.positive? && count_match?
       end
 
       def string_match?(actual)
@@ -40,7 +44,11 @@ module RSpecHTML
       end
 
       def string_siblings_match?(actual)
-        actual.siblings.any? { |sibling| (sibling&.text || '').include?(@expected.to_s) }
+        matching_siblings = actual.siblings.select { |sibling| (sibling&.text || '').include?(@expected.to_s) }
+        @actual_count = matching_siblings.size
+        return matching_siblings.size.positive? if @expected_count.nil?
+
+        matching_siblings.size.positive? && count_match?
       end
 
       def raise_argument_error

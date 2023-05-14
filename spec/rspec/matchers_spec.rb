@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe RSpecHTML::Matchers do # rubocop:disable RSpec/FilePath
-  subject { parse_html(fixture(:html, 'basic').read) }
+  subject(:document) { parse_html(fixture(:html, 'basic').read) }
 
   describe '#contain_tag' do
     it { is_expected.to contain_tag :span, class: 'example-class' }
@@ -37,6 +37,18 @@ RSpec.describe RSpecHTML::Matchers do # rubocop:disable RSpec/FilePath
     it { is_expected.not_to match_text('more example body content').twice }
     it { is_expected.not_to match_text('non-existent content').twice }
     it { is_expected.not_to contain_tag(:span, class: 'another-class').twice }
+
+    context 'with matching parent elements for text match' do
+      subject { document.div('.with-siblings .children').li('.matches-with-sibling') }
+
+      it { is_expected.to match_text('Matched Text').twice }
+    end
+
+    context 'with matching parent elements for regexp match' do
+      subject { document.div('.with-siblings .children').li('.matches-with-sibling') }
+
+      it { is_expected.to match_text(/Matched Text/).twice }
+    end
   end
 
   describe '#times' do
