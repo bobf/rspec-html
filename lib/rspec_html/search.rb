@@ -117,12 +117,12 @@ module RSpecHTML
 
     def index(val)
       zero_index_error if val.zero?
-      self.class.new(@siblings[val - 1], @element.name, element_wrapper)
+      Element.new(@siblings[val - 1], @element.name)
     end
 
     def range(val)
       zero_index_error if val.first.zero?
-      self.class.new(@siblings[(val.first - 1)..(val.last - 1)], :range, element_wrapper)
+      @siblings[(val.first - 1)..(val.last - 1)].map { |element| Element.new(element, @element.name) }
     end
 
     def zero_index_error
@@ -149,7 +149,10 @@ module RSpecHTML
 
     def where_xpath(tag, query)
       conditions = "[#{where_conditions(query)}]" unless query.compact.empty?
-      @element&.xpath(".//#{tag}#{conditions}")
+      result = @element&.xpath(".//#{tag}#{conditions}")
+      return result unless @siblings.is_a?(Nokogiri::XML::NodeSet) && result.empty?
+
+      @siblings.xpath(".//#{tag}#{conditions}")
     end
 
     def where_conditions(query)

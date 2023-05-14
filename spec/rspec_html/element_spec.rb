@@ -116,6 +116,12 @@ RSpec.describe RSpecHTML::Element do # rubocop:disable RSpec/FilePath
     subject { element.body.span[:class] }
 
     it { is_expected.to eql 'example-class' }
+
+    context 'with matching siblings' do
+      subject { element.table.td('.table-cell').third.a }
+
+      its([:href]) { is_expected.to eql 'http://example.com/' }
+    end
   end
 
   describe '#all' do
@@ -163,6 +169,7 @@ RSpec.describe RSpecHTML::Element do # rubocop:disable RSpec/FilePath
     subject { element.body.span[1...2] }
 
     its(:size) { is_expected.to be 2 }
+    it { is_expected.to all(be_a described_class) }
   end
 
   describe '#size' do
