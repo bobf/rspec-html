@@ -150,7 +150,7 @@ module RSpecHTML
     def where_xpath(tag, query)
       conditions = "[#{where_conditions(query)}]" unless query.compact.empty?
       result = @element&.xpath(".//#{tag}#{conditions}")
-      return result unless @siblings.is_a?(Nokogiri::XML::NodeSet) && result.empty?
+      return result unless @siblings.is_a?(Nokogiri::XML::NodeSet) && (result.nil? || result.empty?)
 
       @siblings.xpath(".//#{tag}#{conditions}")
     end
