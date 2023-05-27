@@ -56,11 +56,11 @@ module RSpecHTML
 
     # rubocop:disable Naming/PredicateName
     def has_css?(*args)
-      !@element&.css(*args)&.empty?
+      !blank?(@element&.css(*args))
     end
 
     def has_xpath?(*args)
-      !@element&.xpath(*args)&.empty?
+      !blank?(@element&.xpath(*args))
     end
     # rubocop:enable Naming/PredicateName
 
@@ -148,9 +148,9 @@ module RSpecHTML
     end
 
     def where_xpath(tag, query)
-      conditions = "[#{where_conditions(query)}]" unless query.compact.empty?
+      conditions = "[#{where_conditions(query)}]" unless blank?(query.compact)
       result = @element&.xpath(".//#{tag}#{conditions}")
-      return result unless @siblings.is_a?(Nokogiri::XML::NodeSet) && (result.nil? || result.empty?)
+      return result unless @siblings.is_a?(Nokogiri::XML::NodeSet) && blank?(result)
 
       @siblings.xpath(".//#{tag}#{conditions}")
     end
@@ -174,6 +174,12 @@ module RSpecHTML
       return @element&.css(tag.to_s)&.first unless all
 
       @element&.css(tag.to_s)
+    end
+
+    def blank?(object)
+      return true unless object
+
+      object.empty?
     end
   end
   # rubocop:enable Metrics/ClassLength
