@@ -14,3 +14,4 @@
 *.swo
 .byebug_history
 rspec-html-*.gem
+/rspec-documentation/bundle/

@@ -49,6 +49,7 @@ module RSpecHTML
 
     Tags.each do |tag|
       define_method tag.downcase do |*args|
+        args[0] = " #{args[0]}" if args.first.is_a?(String) && args.first&.match?(/^[a-zA-Z]/)
         options = args.first
         return @search.new_from_find(tag.downcase, options) if options.nil?
 
