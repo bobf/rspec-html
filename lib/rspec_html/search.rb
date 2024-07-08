@@ -83,7 +83,7 @@ module RSpecHTML
     end
 
     def attributes
-      @element&.attributes&.to_h { |key, val| [key.to_sym, val.to_s] } || {}
+      @element&.attributes.to_h { |key, val| [key.to_sym, val.to_s] }
     end
 
     def size
@@ -92,6 +92,12 @@ module RSpecHTML
       @siblings&.size || 0
     end
     alias length size
+
+    def children(text: false) # rubocop:disable Metrics/CyclomaticComplexity
+      @element&.children
+              &.map { |child| Element.new(child, child.name, siblings: @element.children) }
+              &.reject { |child| text ? false : child.name == 'text' } || []
+    end
 
     def new_from_find(tag, options)
       Element.new(

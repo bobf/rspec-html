@@ -10,5 +10,5 @@ test:
 .PHONY: publish
 publish:
 	@RSPEC_DOCUMENTATION_URL_ROOT='/$(project)' bundle exec rspec-documentation
-	@rsync --delete -r rspec-documentation/bundle/ docs01.bob.frl:/mnt/docs/$(project)/
+	@rsync --delete -r rspec-documentation/bundle/ docs.bob.frl:/var/www/html/$(project)/
 	@echo 'Published.'

@@ -14,6 +14,27 @@ it 'retrieves all matching elements' do
 end
 ```
 
+## `#children`
+
+Use `#children` to access immediate child elements of the current element. Return an empty array if no children present.
+
+```rspec:html
+subject(:document) { parse_html('<div>text<span>span #1</span><span>span #2</span></div>') }
+
+it 'retrieves all matching elements' do
+  expect(document.div.children.size).to eql 2
+end
+```
+
+Pass `text: true` to also include dangling text (default: `false`):
+
+```rspec:html
+subject(:document) { parse_html('<div>text<span>span #1</span><span>span #2</span></div>') }
+
+it 'retrieves all matching elements' do
+  expect(document.div.children(text: true).size).to eql 3
+end
+```
 ## `#[]`
 
 Use `#[]` to index a specific element from a matching set. Note that indexing starts at `1`, not `0`, so the first element in a set is `[1]`.
